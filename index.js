@@ -5,3 +5,5 @@ http.createServer((request, response)=>{
   response.write(JSON.stringify(data))
   response.end()
 }).listen(5000)
+
+console.log(process.argv);
