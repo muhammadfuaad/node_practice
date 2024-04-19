@@ -7,13 +7,10 @@ async function dbConnection() {
   let result = await client.connect()
   db = result.db(datbaseName)
   return collection = db.collection("products")
-  // let data = await collection.find({name: "P3"}).toArray()
-  // console.log(data);
 }
 
 dbConnection().then((data)=>{
-  data.find({name: "P2"}).toArray().then((data)=>{
-    console.log("data:", data)
+  data.find({}).toArray().then((data)=>{
+    console.warn("data:", data)
   })
 })
-console.warn(dbConnection())
