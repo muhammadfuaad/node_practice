@@ -1,16 +1,17 @@
-const {MongoClient} = require("mongodb")
-const url = "mongodb+srv://fuaad29:1234567890@cluster0.imqnzjb.mongodb.net/"
-const datbaseName = "ecommerce"
-const client = new MongoClient(url)
+const dbConnection = require("./mongodb")
 
-async function dbConnection() {
-  let result = await client.connect()
-  db = result.db(datbaseName)
-  return collection = db.collection("products")
-}
-
-dbConnection().then((data)=>{
-  data.find({}).toArray().then((data)=>{
-    console.warn("data:", data)
+dbConnection().then((data_1)=>{
+  // console.log("data_1:", data_1);
+  // console.log("data_1.find({}):", data_1.find({}));
+  // console.log("data_1.find({}).toArray():", data_1.find({}).toArray());
+  data_1.find({}).toArray().then((data_2)=>{
+    console.warn("data_2(data from then statement):", data_2)
   })
 })
+
+const main = async ()=>{
+  let data = await dbConnection()
+  data = await data.find({}).toArray()
+  console.log("data(data from async/await):", data);
+}
+main()
