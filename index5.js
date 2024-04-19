@@ -11,4 +11,9 @@ async function dbConnection() {
   // console.log(data);
 }
 
+dbConnection().then((data)=>{
+  data.find({name: "P2"}).toArray().then((data)=>{
+    console.log("data:", data)
+  })
+})
 console.warn(dbConnection())
