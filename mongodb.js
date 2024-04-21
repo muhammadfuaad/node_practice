@@ -6,7 +6,7 @@ const client = new MongoClient(url)
 async function dbConnection() {
   let result = await client.connect()
   db = result.db(datbaseName)
-  return collection = db.collection("products")
+  return collection = db.collection("users")
 }
 
 module.exports = dbConnection

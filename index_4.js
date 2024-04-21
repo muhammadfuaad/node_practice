@@ -6,7 +6,7 @@ const client = new MongoClient(url)
 async function getData() {
   let result = await client.connect()
   db = result.db(datbaseName)
-  collection = db.collection("products")
+  collection = db.collection("users")
   let data = await collection.find({name: "P3"}).toArray()
   console.log(data);
 }
