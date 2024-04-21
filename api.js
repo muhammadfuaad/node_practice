@@ -5,12 +5,21 @@ app.use(express.json())
 app.get("/", async (req, res)=>{
   let data = await dbConnection()
   data = await data.find().toArray()
-  // console.log(data);
+  console.log(data);
   res.send(data)
 })
 
 app.post("/", async (req, res)=>{
-  console.log(req.body);
+  // console.log(req.body);
+  const db = await dbConnection()
+  const result = await db.insertMany(req.body)
+  console.log(result);
 })
+
+app.put("/", async (req, res)=>{
+  // console.log(req.body);
+  const db = await dbConnection()
+  const result = await db.updateOne({name: req.body.name}, {$set: req.body})
+res.send({result: "update"})})
 
 app.listen(5000)
