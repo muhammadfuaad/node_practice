@@ -1,7 +1,6 @@
 const express = require("express")
 require("./config")
-const User = require("./users")
-
+const User = require("./user")
 
 const app = express()
 app.use(express.json())
@@ -21,6 +20,17 @@ app.get("/list", async (req, res)=>{
 app.delete("/delete/:_id", async (req, res)=>{
   console.log(req.params);
   let data = await User.deleteOne(req.params)
+  res.send(data)
+})
+
+app.put("/update/:_id", async (req, res)=>{
+  console.log(req.params);
+  let data = await User.updateOne(
+    req.params,
+    {
+      $set: req.body
+    }
+  )
   res.send(data)
 })
 
