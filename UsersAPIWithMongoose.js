@@ -1,6 +1,7 @@
 const express = require("express")
 require("./config")
 const User = require("./user")
+console.log("User:", User);
 
 const app = express()
 app.use(express.json())
