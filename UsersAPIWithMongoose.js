@@ -1,19 +1,23 @@
 const express = require("express")
+const cors = require('cors')
 require("./config")
 const User = require("./user")
 console.log("User:", User);
 
 const app = express()
 app.use(express.json())
+app.use(cors())
 
 app.post("/create", async (req, res)=>{
   let data = new User(req.body)
+  console.log("data:", data);
   let result =await data.save()
   console.log(result);
   res.send(result)
 })
 
 app.get("/list", async (req, res)=>{
+  console.log("User:", User);
   let data = await User.find()
   res.send(data)
 })
@@ -36,4 +40,4 @@ app.put("/update/:_id", async (req, res)=>{
 })
 
 
-app.listen(5000)
+app.listen(3001)

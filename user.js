@@ -4,7 +4,7 @@ const mongoose = require("mongoose")
 
 const userSchema = new mongoose.Schema({
   name: String,
-  age: Number
+  number: Number
 })
 // Here, you define a Mongoose schema using "mongoose.Schema". A schema in Mongoose defines the structure of 
 // documents within a collection in a MongoDB database.
