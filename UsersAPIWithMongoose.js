@@ -39,5 +39,15 @@ app.put("/update/:_id", async (req, res)=>{
   res.send(data)
 })
 
+app.get("/search/:key", async (req, res)=>{
+  console.log(req.params.key);
+  let data = await User.find(
+    {
+      $or: [{"name": {$regex: req.params.key}}]
+    }
+  )
+  res.send(data)
+})
+
 
 app.listen(3001)
