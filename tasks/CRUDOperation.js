@@ -34,6 +34,7 @@ app.put("/users/:id", async (req, res)=>{
   // console.log("req.params:", req.params);
   // console.log("req.body:", req.body);
   const updatedKeys = Object.keys(req.body)
+  const length = updatedKeys.length
   console.log("updatedKeys:", updatedKeys);
   const firstKey = updatedKeys[0]
   console.log("firstKey:", firstKey);
@@ -49,7 +50,10 @@ app.put("/users/:id", async (req, res)=>{
   
   console.log("updatedElement[updatedKeys[0]]:", updatedElement[updatedKeys[0]])
 
-  updatedElement[firstKey] = firstValue
+  for (let i=0; i<length; i++) {
+    updatedElement[updatedKeys[i]] = updatedValues[i]
+  }
+  // updatedElement[firstKey] = firstValue
   console.log("updatedElement:", updatedElement);
 
 
