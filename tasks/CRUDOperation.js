@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
 const port = 3001
-const data = [{
+let data = [{
     "id": "2024-05-27T16:27:50.169Z",
     "name": "John Doe",
     "email": "random@gmail.com",
