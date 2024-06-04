@@ -9,7 +9,16 @@ const bodyParser = require('body-parser');
 // app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const data =[];
+const data =[
+  
+{
+  "id": "2024-05-30T17:20:21.119Z",
+  "name": "John Doe",
+  "email": "random@gmail.com",
+  "rollNumber": "seebiz.gpt0124evedev66",
+  "password": 123
+}
+];
 
 app.get("/users",  (req, res)=>{
   res.render("users.ejs", {data: data})
@@ -26,9 +35,11 @@ app.get("/error", (req, res)=>{
 app.post("/sign_up",  (req, res)=>{
   // console.log("req.body:", req.body);
   const {name, email, password, rollNumber}= req.body
-  const found = data.some(el => el.email === email);
+  const found = data.some(element => element.email === email);
   if (!found) {
     const id =new Date(Date.now()).toISOString()
+    const newId = id.replace('-', '').replace(':', '').replace('.', '')
+    console.log("id:", id);
     const obj = {id: id, name: name, email: email, password: password, rollNumber: rollNumber}
 
     // console.log("obj:", obj);
