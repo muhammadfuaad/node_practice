@@ -3,6 +3,7 @@ const cors = require('cors')
 require("./config")
 const User = require("./user")
 console.log("User:", User);
+const PORT = 3000
 
 const app = express()
 app.use(express.json())
@@ -16,9 +17,11 @@ app.get("/", (req, res)=>{
 app.post("/create", async (req, res)=>{
   let data = new User(req.body)
   console.log("data:", data);
-  let result =await data.save()
+  // questions:
+  // why does it show twice in backend console?
+  let result = await data.save()
   console.log(result);
-  res.send(result)
+  res.send(req.body)
 })
 
 app.get("/list", async (req, res)=>{
@@ -55,4 +58,6 @@ app.get("/search/:key", async (req, res)=>{
 })
 
 
-app.listen(3001)
+app.listen(PORT, ()=>{
+  console.log(`server is runnng at ${PORT}`);
+})
