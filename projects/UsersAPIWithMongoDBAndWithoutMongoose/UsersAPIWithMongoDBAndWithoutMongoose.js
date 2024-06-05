@@ -1,26 +1,25 @@
 const express = require("express")
 const cors = require('cors')
 require("./config")
-// const User = require("./user")
-// console.log("User:", User);
-const PORT = 3001
+const User = require("./user")
+console.log("User:", User);
+const PORT = 3000
 
 const app = express()
 app.use(express.json())
 app.use(cors())
-// app.set("view engine", "ejs")
+app.set("view engine", "ejs")
 
 app.get("/", (req, res)=>{
   return res.render("form")
 })
 
 app.post("/create", async (req, res)=>{
-  let data = req.body
+  let data = new User(req.body)
   console.log("data:", data);
-  
-  let result = await data.save()
   // questions:
-  // data.save() is not a function
+  // why does it show twice in backend console?
+  let result = await data.save()
   console.log(result);
   res.send(req.body)
 })
