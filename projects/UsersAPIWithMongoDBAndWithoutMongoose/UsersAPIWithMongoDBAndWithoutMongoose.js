@@ -1,63 +1,39 @@
 const express = require("express")
+const mongodb = require("mongodb")
 const cors = require('cors')
-require("./config")
-const User = require("./user")
-console.log("User:", User);
 const PORT = 3000
+const ObjectId = mongodb.ObjectId;
 
 const app = express()
 app.use(express.json())
 app.use(cors())
-app.set("view engine", "ejs")
+const dbConnection = require("./DbConnection")
 
-app.get("/", (req, res)=>{
-  return res.render("form")
-})
+app.get("/users", async(req, res)=>{
+  const usersCollection = await dbConnection()
 
-app.post("/create", async (req, res)=>{
-  let data = new User(req.body)
+  let data = await usersCollection.find().toArray()
   console.log("data:", data);
-  // questions:
-  // why does it show twice in backend console?
-  let result = await data.save()
-  console.log(result);
-  res.send(req.body)
-})
-
-app.get("/list", async (req, res)=>{
-  console.log("User:", User);
-  let data = await User.find()
   res.send(data)
 })
 
-app.delete("/delete/:_id", async (req, res)=>{
-  console.log(req.params);
-  let data = await User.deleteOne(req.params)
-  res.send(data)
+app.post("/create_user", async(req, res)=>{
+  const usersCollection = await dbConnection()
+  const data = req.body
+  // console.log(req.body);
+  let result = await usersCollection.insertOne(data)
+  res.send(result)
 })
 
-app.put("/update/:_id", async (req, res)=>{
-  console.log(req.params);
-  let data = await User.updateOne(
-    req.params,
-    {
-      $set: req.body
-    }
-  )
-  res.send(data)
+app.delete("/delete_user/:id", async(req, res)=>{
+  const usersCollection = await dbConnection()
+  const id = req.params
+  const deleteObject = await usersCollection.find({id: new ObjectId(id)})
+  console.log("deleteObject:", deleteObject);
+  const result = await usersCollection.deleteOne({id: new ObjectId(id)})
+  res.send(result)
+  // res.send(`${result}, ${id}, ${deleteObject}`)
 })
-
-app.get("/search/:key", async (req, res)=>{
-  console.log(req.params.key);
-  let data = await User.find(
-    {
-      $or: [{"name": {$regex: req.params.key}}]
-    }
-  )
-  res.send(data)
-})
-
-
 app.listen(PORT, ()=>{
   console.log(`server is runnng at ${PORT}`);
 })
