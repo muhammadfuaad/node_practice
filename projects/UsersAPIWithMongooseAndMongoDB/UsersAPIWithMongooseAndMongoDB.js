@@ -1,8 +1,8 @@
 const express = require("express")
 const cors = require('cors')
 require("./config")
-// const User = require("./user")
-// console.log("User:", User);
+const User = require("./user")
+console.log("User:", User);
 const PORT = 3001
 
 const app = express()
@@ -15,7 +15,7 @@ app.get("/", (req, res)=>{
 })
 
 app.post("/create", async (req, res)=>{
-  let data = req.body
+  let data = new User(req.body)
   console.log("data:", data);
   
   let result = await data.save()
